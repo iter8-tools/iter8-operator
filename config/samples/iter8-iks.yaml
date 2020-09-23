@@ -5,7 +5,7 @@ metadata:
 spec:
   controller:
     deployment:
-      image: iter8/iter8-controller:v1.0.0-rc2
+      image: iter8/iter8-controller:v1.0.0-rc3
       imagePullPolicy: Always
       resources:
         limits:
@@ -16,7 +16,7 @@ spec:
           memory: 50Mi      
   analyticsEngine:
     deployment:
-      image: iter8/iter8-analytics:v1.0.0-rc2
+      image: iter8/iter8-analytics:v1.0.0-rc3
       imagePullPolicy: Always
     metricsBackend:
       url: http://prometheus.istio-system:9090
