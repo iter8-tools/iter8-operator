@@ -1,0 +1,308 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  name: iter8.v1.0.0
+  namespace: iter8
+  annotations:
+    alm-examples: >-
+      [{"apiVersion":"","kind":"Experiment","metadata":{"name":""},"spec":{}},{"apiVersion":"","kind":"Experiment","metadata":{"name":""},"spec":{}}]
+    categories: ''
+    certified: 'false'
+    createdAt: ''
+    description: >-
+      Iter8 is an open-source toolkit for continuous experimentation on
+      Kubernetes. 
+    containerImage: ''
+    support: ''
+    capabilities: Basic Install
+    repository: ''
+spec:
+  displayName: Iter8
+  description: >
+    ## What is an iter8 experiment?
+
+
+    Use an iter8 experiment to safely expose alternative versions of a service
+    to application traffic and intelligently rollout the best version of your
+    service. Iter8’s expressive model of experimentation supports a diverse
+    variety of experiments. The four main kinds of experiments in iter8 are as
+    follows.
+
+
+    - Perform a canary release with two versions, a baseline and a candidate.
+    Iter8 will shift application traffic in a safe and progressive manner to the
+    candidate, if the candidate meets the criteria you specify in the
+    experiment.
+
+
+    - Perform an A/B/n rollout with multiple versions – a baseline and multiple
+    candidates. Iter8 will identify and shift application traffic safely and
+    gradually to the winner, where the winning version is defined by the
+    criteria you specify in your experiments.
+
+
+    - Perform an A/B rollout – this is a special case of the A/B/n rollout
+    described above with a baseline and a single candidate.
+
+
+    - Run a performance test with a single version of a microservice. iter8 will
+    verify if the version meets the criteria you specify in the experiment.
+
+    ## What is iter8?
+
+
+    You are developing a distributed microservices-based application on
+    Kubernetes and have created alternative versions of a service. You want to
+    identify the best version of your service using a live experiment and
+    rollout this version in a safe and reliable manner.
+
+
+    Enter iter8.
+
+
+    Iter8 is an open source toolkit for continuous experimentation on
+    Kubernetes. Iter8 enables you to deliver high-impact code changes within
+    your microservices applications in an agile manner while eliminating the
+    risk. Using iter8’s machine learning (ML)-driven experimentation
+    capabilities, you can safely and rapidly orchestrate various types of live
+    experiments, gain key insights into the behavior of your microservices, and
+    rollout the best versions of your microservices in an automated, principled,
+    and statistically robust manner.
+
+
+    ## Prerequisites for enabling this Operator
+  maturity: beta
+  version: 1.0.0
+  replaces: ''
+  skips: []
+  minKubeVersion: ''
+  keywords: []
+  maintainers:
+    - name: ''
+      email: ''
+  provider:
+    name: Iter8
+  labels: {}
+  selector:
+    matchLabels: {}
+  links:
+    - name: 'iter8 '
+      url: 'https://iter8.tools/'
+  icon:
+    - base64data: ''
+      mediatype: ''
+  customresourcedefinitions:
+    owned:
+      - name: experiments.iter8.tools
+        displayName: Experiment
+        kind: Experiment
+        version: v1alpha2
+        description: Experiment
+        resources:
+          - version: v1
+            kind: Deployment
+          - version: v1
+            kind: Service
+          - version: v1
+            kind: ReplicaSet
+          - version: v1
+            kind: Pod
+          - version: v1
+            kind: Secret
+          - version: v1
+            kind: ConfigMap
+        specDescriptors:
+          - path: analyticsEndpoint
+            description: Analytics Endpoint
+            displayName: Analytics Endpoint
+            x-descriptors: []
+          - path: cleanup
+            description: Cleanup
+            displayName: Cleanup
+            x-descriptors: []
+          - path: criteria
+            description: Criteria
+            displayName: Criteria
+            x-descriptors: []
+          - path: duration
+            description: Duration
+            displayName: Duration
+            x-descriptors: []
+          - path: manualOverride
+            description: Manual Override
+            displayName: Manual Override
+            x-descriptors: []
+          - path: metrics
+            description: Metrics
+            displayName: Metrics
+            x-descriptors: []
+          - path: networking
+            description: Networking
+            displayName: Networking
+            x-descriptors: []
+          - path: service
+            description: Service
+            displayName: Service
+            x-descriptors: []
+          - path: trafficControl
+            description: Traffic Control
+            displayName: Traffic Control
+            x-descriptors: []
+        statusDescriptors:
+          - path: analysisState
+            description: Analysis State
+            displayName: Analysis State
+            x-descriptors: []
+          - path: assessment
+            description: Assessment
+            displayName: Assessment
+            x-descriptors: []
+          - path: conditions
+            description: Conditions
+            displayName: Conditions
+            x-descriptors: []
+          - path: currentIteration
+            description: Current Iteration
+            displayName: Current Iteration
+            x-descriptors: []
+          - path: effectiveHosts
+            description: Effective Hosts
+            displayName: Effective Hosts
+            x-descriptors: []
+          - path: endTimestamp
+            description: End Timestamp
+            displayName: End Timestamp
+            x-descriptors: []
+          - path: experimentType
+            description: Experiment Type
+            displayName: Experiment Type
+            x-descriptors: []
+          - path: initTimestamp
+            description: Init Timestamp
+            displayName: Init Timestamp
+            x-descriptors: []
+          - path: lastUpdateTime
+            description: Last Update Time
+            displayName: Last Update Time
+            x-descriptors: []
+          - path: message
+            description: Message
+            displayName: Message
+            x-descriptors: []
+          - path: phase
+            description: Phase
+            displayName: Phase
+            x-descriptors: []
+          - path: startTimestamp
+            description: Start Timestamp
+            displayName: Start Timestamp
+            x-descriptors: []
+    required: []
+  install:
+    strategy: deployment
+    spec:
+      permissions: []
+      clusterPermissions:
+        - serviceAccountName: iter8-controller
+          rules:
+            - apiGroups: iter8.tools
+              resources:
+                - experiments
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups: ' iter8.tools'
+              resources:
+                - experiments/status
+              verbs:
+                - get
+                - update
+                - patch
+            - apiGroups: networking.istio.io
+              resources:
+                - destinationrules
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+            - apiGroups: apps
+              resources:
+                - deployments
+              verbs:
+                - get
+                - list
+                - watch
+                - update
+                - patch
+                - delete
+            - apiGroups: apps
+              resources:
+                - deployments/status
+              verbs:
+                - get
+                - update
+                - patch
+            - apiGroups: admissionregistration.k8s.io
+              resources:
+                - mutatingwebhookconfigurations
+                - validatingwebhookconfigurations
+              verbs:
+                - get
+                - list
+                - watch
+                - create
+                - update
+                - patch
+                - delete
+      deployments:
+        - name: iter8-controller
+          namespace: iter8
+          labels:
+            app: iter8-controller
+          spec:
+            selector:
+              matchLabels:
+                app: iter8-controller
+            template:
+              metadata:
+                labels:
+                  app: iter8-controller
+              spec:
+                serviceAccountName: iter8-controller
+                containers:
+                  - name: iter8-controller
+                    image: 'iter8/iter8-controller:v1.0.0-rc3'
+                    imagePullPolicy: Always
+                    env:
+                      - name: POD_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.namespace
+                    command:
+                      - /manager
+                    resources:
+                      limits:
+                        cpu: 100m
+                        memory: 75Mi
+                      requests:
+                        cpu: 100m
+                        memory: 50Mi
+                terminationGracePeriodSeconds: 10
+  installModes:
+    - type: OwnNamespace
+      supported: true
+    - type: SingleNamespace
+      supported: true
+    - type: MultiNamespace
+      supported: false
+    - type: AllNamespaces
+      supported: false

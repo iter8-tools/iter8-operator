@@ -1,0 +1,5 @@
+packageName: iter8
+channels:
+- name: stable
+  currentCSV: iter8.v1.0.0
+defaultChannel: stable
